@@ -1,9 +1,11 @@
 import os
-
+from environs import Env
 from django.conf.global_settings import DATABASES
 from dotenv import load_dotenv
 import dj_database_url
 
+env = Env()
+env.read_env()
 
 dotenv_path = os.path.join(os.path.dirname(__file__), '.env')
 if os.path.exists(dotenv_path):
@@ -16,7 +18,7 @@ INSTALLED_APPS = ['datacenter']
 
 SECRET_KEY = os.getenv("SECRET_KEY")
 
-DEBUG = os.getenv("DEBUG")
+DEBUG = env.bool("DEBUG", default=False)
 
 ROOT_URLCONF = "project.urls"
 
